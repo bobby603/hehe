@@ -1,0 +1,27 @@
+#ifndef DISK_H
+#define DISK_H
+
+#include <string>
+
+using namespace std;
+
+//class Disk
+class Disk {
+private:
+	//stores radius of the disk
+	int radius;
+public:
+	
+	Disk(int radii) { //standard constrctor
+		this->radius = radii;
+	}
+	
+	int getRadius() { //getter method for radius
+		return radius;
+	}
+	
+	string toString() { //prints radius
+		return to_string(radius);
+	}
+};
+#endif
