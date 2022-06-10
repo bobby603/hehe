@@ -1,0 +1,75 @@
+#ifndef PYRAMID_H
+#define PYRAMID_H
+
+#include <stack>
+#include "Disk.h"
+
+using namespace std;
+
+class Pyramid {
+private:
+	//stores a stack of disks
+	stack<Disk> pyramid;
+public:
+	//return true if stack is empty
+	bool isEmpty() {
+		return pyramid.empty();
+	}
+	//return disk at top
+	Disk getTopDisk() {
+		return pyramid.top();
+	}
+	//add new disk to stack
+	void addDisk(Disk d) {
+		pyramid.push(d);
+	}
+	Pyramid flip() {
+		stack <Disk> temp = pyramid;
+		Pyramid result;
+		while (!temp.empty()) {
+			result.addDisk(temp.top());
+			temp.pop();
+		}
+		return result;
+	}
+	//get the bottom of the stack to print properly
+	Disk bottom(stack<Disk> s) {
+		Disk result = Disk(-1);
+		while (!s.empty()) {
+			result = s.top();
+			s.pop();
+		}
+		return result;
+	}
+	//remove bottom of the stack to print properly
+	stack<Disk> removeBottom(stack<Disk> s) {
+		stack<Disk> temp;
+		while (!s.empty()) {
+			temp.push(s.top());
+			s.pop();
+		}
+		temp.pop();//remove the last element
+		while (!temp.empty()) {
+			s.push(temp.top());
+			temp.pop();
+		}
+		return s;
+	}
+	//print radius of every disk in the stack
+	string toString() {
+		string result = "[";
+		if (!pyramid.empty()) {
+			stack<Disk> temp = pyramid; //create temp variable so original doesnt change 
+			while (!temp.empty()) {
+				result += bottom(temp).toString() + ", ";
+				temp = removeBottom(temp);
+				//result += temp.top().toString() + ", ";
+				//temp.pop();
+			}
+			result = result.substr(0, result.length() - 2); //delete last comma and space
+		}
+		return result + "]";
+	}
+};
+
+#endif
